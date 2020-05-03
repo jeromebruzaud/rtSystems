@@ -2,7 +2,7 @@ class System{
     constructor(features){
         
         this.features = featureGen(); 
-        console.log(features)
+        console.log(features);
     }
 }
 function d5(){
@@ -51,8 +51,38 @@ function featureGen(){
         return "Warp Turbulence"
     }
 }
-planet1 = {
-    features: featureGen(),
-    
+function starGen(){
+    initial = d10();
+    if(initial==1){
+        return "Mighty"
+    };
+    if(initial>=2 && initial<=4){
+        return "Vigorous"
+    }
+    if(initial==5||initial==6||initial==7){
+        return "Luminous"
+    }
+    if(initial==8){
+        return "Dull"
+    }
+    if(initial==9){
+        return "Anomalous"
+    }
+    if(initial==10){
+        binary = d10()
+        if(binary<=7){
+            
+            if
+        }
+        return "Binary"
+    }
 }
-console.log(planet1.features)
+
+system1 = {
+    features: featureGen(),
+    star: starGen(),
+}
+
+for(i=25;i>0;i--){
+    console.log(featureGen(),starGen())
+}
