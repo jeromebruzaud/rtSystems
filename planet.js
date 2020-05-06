@@ -8,7 +8,7 @@
 
 //as you can see in planet1, a BUNCH of these results rely on the results of the entries behind them
 
-
+//Constructor (Tables 6-12, P. 19-23)
 function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab) {
     this.body = body, 
     this.gravity = gravity,
@@ -19,16 +19,26 @@ function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, ha
     this.hab = hab
 }
 
+//Planet Actual
 planet1 = new Rockyplanet(
-    getRockyBody(d10()), 
+    //body
+    getRockyBody(d10()),
+    //gravity
     getRockyGravity(d10(), getRockyGravitymod(this.body)),
-    getRockyOrbitalFeatures(d100, getRockyOrbitalFeaturesMod(this.gravity)),
+    //orbitalFeatures
+    getRockyOrbitalFeatures(getRockyOrbitalFeaturesMod(this.gravity)),
+    //atmo
     getRockyAtmo(d10(), getRockyAtmoMod(this.gravity)),
+    //atmocomp
     getRockyAtmoComp(d10(), this.atmo),
+    //climate
     getRockyClimate(d10()),
+    //hab
     getRockyHab(d10(), getRockyHabMod(this.climate), this.atmo, this.atmocomp)
     )
+    console.log(planet1);
 
+//Roll Functions
 function d2(){
     roll = Math.floor(Math.random()*2)+1
     return roll;    
@@ -54,6 +64,7 @@ function d100(){
     return roll;    
 }
 
+//Get Body (Table 1-6 P. 19)
 function getRockyBody(roll) {
     if(roll >= 9){
         return 'Vast';
@@ -70,6 +81,7 @@ function getRockyBody(roll) {
     }
 }
 
+//Get Gravity (Table 1-7 P. 20)
 function getRockyGravitymod(body){
     var gravmod = 0;
     if(body === 'Vast'){
@@ -97,34 +109,42 @@ function getRockyGravity(roll, mod){
     }
 }
 
+//Get Orbital Features (Table 1-8 P. 20)
+//TODO fix this function
 function getRockyOrbitalFeaturesMod(gravity){
-    var roll;
+    var mod = 0;
     if(gravity === 'High Gravity'){
-        roll = d4();
+        mod = d4()
+        return mod;
     } else if(gravity === 'Normal Gravity'){
-        roll = d3();
+        mod = d3()
+        return mod;
     } else if(gravity === 'Low Gravity'){
-        roll = d2();
+        mod = d2()
+        return mod;
     }
-    return roll;
 }
 
-function getRockyOrbitalFeatures(roll, times){
-    var orbitalfeat = [];
-    for(i=0; i<=times; i++){
+function getRockyOrbitalFeatures(times){
+    var orbitalfeat =[];
+    for(i=0;i<times;i++){
+        roll = d100()
         if(roll >= 91){
             orbitalfeat.push('Moon');
-        } else if(roll >= 61){
+        } else if(roll >= 61 && roll <= 90){
             orbitalfeat.push('Lesser Moon');
-        } else if(roll >= 46){
+        } else if(roll >= 46 && roll <= 60){
             orbitalfeat.push('Large Asteroid');
         } else {
-            orbitalfeat.push('N/A')
+            orbitalfeat.push('No Feature')
         }
-    }
+    
+}
     return orbitalfeat;
 }
 
+
+//Get Atmo (Table 1-9 P. 24)
 function getRockyAtmoMod(gravity) {
     if(gravity === 'High Gravity'){
         return 1;
@@ -148,6 +168,7 @@ function getRockyAtmo(roll, mod){
     }
 }
 
+//Get Atmo Composition (Table 1-10 P. 24)
 function getRockyAtmoComp(roll, atmo){
     if(atmo === 'None'){
         return 'N/A'
@@ -166,6 +187,7 @@ function getRockyAtmoComp(roll, atmo){
     }
 }
 
+//Get Climate (Table 1-11 P. 22)
 function getRockyClimate(roll){
     //roll needs a -6 in inner cauldron and +6 in outer reaches
     //also if atmo === 'N/A' they are ice worlds in outer, burning worlds inner, primary either
@@ -181,6 +203,8 @@ function getRockyClimate(roll){
         return 'Burning World'
     }
 }
+
+//Get Habitability (Table 1-12 P. 23)
 function getRockyHabMod(climate){
     if(climate ===  'Burning World' || climate === 'Ice World'){
         return -7;
@@ -193,7 +217,7 @@ function getRockyHabMod(climate){
 }
 
 function getRockyHab(roll, mod, atmo, comp){
-    if(atmo === 'N/A' && (comp !== 'Pure' || comp !== 'Tainted')){
+    if(atmo === 'N/A' || comp !== 'Pure' || comp !== 'Tainted'){
         return 'N/A'
     } else {
         var rollmod = roll + mod;

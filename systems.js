@@ -54,33 +54,45 @@ function d100(){
 function featureGen(roll){
     if(roll==1){
         return "Bountiful"
+        //Add 1 Asteroid belt/cluster to any 1 zone
     }
     if(roll==2){
         return "Gravity Tides"
+        //Add 1d5 Gravity Riptides distributed to any zones
     }
     if(roll==3){
         return "Haven"
+        //Add 1 Planet to each zone
+        //Planets in Primary +1 to atmo, +2 to atmocomp
+        //All planets add +2 to Hab
     }
     if(roll==4){
         return "Ill-Omened"
+        //N/A
     }
     if(roll==5){
         return "Pirate Den"
+        //N/A
     }
     if(roll==6){
         return "Ruined Empire"
+        //N/A
     }
     if(roll==7){
         return "Starfarers"
+        //Minimum of 4 Planets total
     }
     if(roll==8){
         return "Stellar Anomaly"
+        //Minus 2 Planets (Min = 0)
     }
     if(roll==9){
         return "Warp Stasis"
+        //N/A
     }
     if(roll==10){
         return "Warp Turbulence"
+        //N/A
     }
 }
 
@@ -193,13 +205,13 @@ function innerGen(initial){
     } else if(initial >= 46){
         return 'Gravity Riptide'
     } else if(initial >= 42){
-        return 'gas giant';
+        return 'Gas Giant';
     } else if(initial >= 30){
         return 'Dust Cloud';
     } else if(initial >= 21){
-        return 'Asteroid cluster';
+        return 'Asteroid Cluster';
     } else {
-        return 'no feature';
+        return 'No Feature';
     }
 }
 
@@ -219,7 +231,7 @@ function primaryGen(initial){
     } else if(initial >= 21){
         return 'Asteroid Belt';
     } else {
-        return 'no feature';
+        return 'No Feature';
     }
 }
 
@@ -241,6 +253,20 @@ function outerGen(initial){
     } else if(initial >= 21){
         return 'Asteroid Belt';
     } else {
-        return 'no feature';
+        return 'No Feature';
     }
 }
+
+//finds instances of "planet", replaces with object
+function getPlanet(){
+    var elems =innerElems.concat(outerElems, primaryElems)
+    var planetCount = 0;
+    for(i=0;i<elems.length;i++){
+        if(elems[i] === "Planet"){
+            //replaces with a Planet Object
+            planetCount++
+        }
+    }
+    return planetCount;
+}
+console.log(getPlanet());
