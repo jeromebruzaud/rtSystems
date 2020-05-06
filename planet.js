@@ -1,3 +1,14 @@
+//Uses an object constructor instead of a class, dunno if that's smart or not?
+
+//need to connect between this and systems
+
+//need a way to read which section planet polulates in (inner, primary or outer)
+
+//needs testing
+
+//as you can see in planet1, a BUNCH of these results rely on the results of the entries behind them
+
+
 function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab) {
     this.body = body, 
     this.gravity = gravity,
