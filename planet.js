@@ -29,6 +29,21 @@ planet1 = new Rockyplanet(
     getRockyHab(d10(), getRockyHabMod(this.climate), this.atmo, this.atmocomp)
     )
 
+function d2(){
+    roll = Math.floor(Math.random()*2)+1
+    return roll;    
+}
+
+function d3(){
+    roll = Math.floor(Math.random()*3)+1
+    return roll;    
+}
+
+function d4(){
+    roll = Math.floor(Math.random()*4)+1
+    return roll;    
+}
+
 function d10(){
     roll = Math.floor(Math.random()*10)+1
     return roll;    
@@ -80,6 +95,34 @@ function getRockyGravity(roll, mod){
     } else {
         return 'Low Gravity'
     }
+}
+
+function getRockyOrbitalFeaturesMod(gravity){
+    var roll;
+    if(gravity === 'High Gravity'){
+        roll = d4();
+    } else if(gravity === 'Normal Gravity'){
+        roll = d3();
+    } else if(gravity === 'Low Gravity'){
+        roll = d2();
+    }
+    return roll;
+}
+
+function getRockyOrbitalFeatures(roll, times){
+    var orbitalfeat = [];
+    for(i=0; i<=times; i++){
+        if(roll >= 91){
+            orbitalfeat.push('Moon');
+        } else if(roll >= 61){
+            orbitalfeat.push('Lesser Moon');
+        } else if(roll >= 46){
+            orbitalfeat.push('Large Asteroid');
+        } else {
+            orbitalfeat.push('N/A')
+        }
+    }
+    return orbitalfeat;
 }
 
 function getRockyAtmoMod(gravity) {
@@ -166,5 +209,4 @@ function getRockyHab(roll, mod, atmo, comp){
             return 'N/A'
         }
     }
-
 }

@@ -10,8 +10,18 @@ class System{
 
 // Roll Functions
 
+function d2(){
+    roll = Math.floor(Math.random()*2)+1
+    return roll;    
+}
+
 function d3(){
     roll = Math.floor(Math.random()*3)+1
+    return roll;    
+}
+
+function d4(){
+    roll = Math.floor(Math.random()*4)+1
     return roll;    
 }
 
