@@ -127,13 +127,20 @@ function starGen(roll){
 system1 = {
     features: featureGen(d10()),
     star: starGen(d10()),
-    innerElements: innerElemPop(systemElem(this.star)),
-    primaryElements: primaryElemPop(systemElem(this.star)),
-    outerElements: outerElemPop(systemElem(this.star))
+    
 }
 
+system1l ={
+    innerElements: innerElemPop(systemElem(system1.star)),
+    primaryElements: primaryElemPop(systemElem(system1.star)),
+    outerElements: outerElemPop(systemElem(system1.star))
+}
+console.log(system1l.innerElements);
+console.log(system1l.primaryElements);
+console.log(system1l.outerElements);
+console.log(system1.star)
 // Testing area, ignore
-console.log(system1);
+
 for(i=25;i>0;i--){
     // console.log(featureGen(d10()),starGen(d10()));
     
@@ -163,11 +170,9 @@ function systemElem(star){
         primCount = d5();
         outCount = d7();
     } else {
-        //TODO fix this lawl
-        //placeholder till we figure out binary
-        innerCount = d5();
-        primCount = d5();
-        outCount = d7();
+        innerCount = 0;
+        primCount = 0;
+        outCount = 0;
     }
     return [innerCount, primCount, outCount]
 } 

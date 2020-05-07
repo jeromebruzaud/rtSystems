@@ -9,34 +9,35 @@
 //as you can see in planet1, a BUNCH of these results rely on the results of the entries behind them
 
 //Constructor (Tables 6-12, P. 19-23)
-function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab) {
-    this.body = body, 
-    this.gravity = gravity,
-    this.orbitalFeatures = orbitalFeatures,
-    this.atmo = atmo,
-    this.atmocomp = atmocomp,
-    this.climate = climate,
-    this.hab = hab
-}
+// function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab) {
+//     this.body = body, 
+//     this.gravity = gravity,
+//     this.orbitalFeatures = orbitalFeatures,
+//     this.atmo = atmo,
+//     this.atmocomp = atmocomp,
+//     this.climate = climate,
+//     this.hab = hab
+// }
 
 //Planet Actual
-planet1 = new Rockyplanet(
+
     //body
-    getRockyBody(d10()),
+    var body = getRockyBody(d10());
     //gravity
-    getRockyGravity(d10(), getRockyGravitymod(this.body)),
+    var gravity = getRockyGravity(d10(), getRockyGravitymod(body));
     //orbitalFeatures
-    getRockyOrbitalFeatures(getRockyOrbitalFeaturesMod(this.gravity)),
+    var orbitalFeatures =getRockyOrbitalFeatures(getRockyOrbitalFeaturesMod(gravity));
     //atmo
-    getRockyAtmo(d10(), getRockyAtmoMod(this.gravity)),
+    var atmo = getRockyAtmo(d10(), getRockyAtmoMod(gravity));
     //atmocomp
-    getRockyAtmoComp(d10(), this.atmo),
+    var atmocomp = getRockyAtmoComp(d10(), atmo);
     //climate
-    getRockyClimate(d10()),
+    var climate = getRockyClimate(d10());
     //hab
-    getRockyHab(d10(), getRockyHabMod(this.climate), this.atmo, this.atmocomp)
-    )
-    console.log(planet1);
+    var hab = getRockyHab(d10(), getRockyHabMod(climate), atmo, atmocomp);
+    
+    var planet = [body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab]
+    console.log(planet);
 
 //Roll Functions
 function d2(){
@@ -230,7 +231,7 @@ function getRockyHab(roll, mod, atmo, comp){
         } else if(rollmod >=2){
             return 'Trapped Water'
         } else{
-            return 'N/A'
+            return 'Its bugged!'
         }
     }
 }
