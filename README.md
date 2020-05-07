@@ -5,3 +5,7 @@ The hitherto unnamed project is designed to emulate the behavior of the star sys
 Basically, you hit the button, and it auto-generates a complete random system based on Tables 1-12 of the aforementioned book, a task that can take upwards of 2 hours if done by hand can now be done in seconds. 
 
 Eventually I'd like to implement custom behavior (min/max habitable worlds, selecting a certain 'theme', etc) but for now just getting it up and running is enough for me. 
+
+***Update***
+
+Under both the System Object and the Planet object, refering back to previous elements as "this" DO NOT work. Currently I do not know how to reference an element of an object from within the object. Until this is discovered, we're up against a hard wall with development. 
