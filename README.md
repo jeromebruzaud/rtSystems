@@ -8,4 +8,10 @@ Eventually I'd like to implement custom behavior (min/max habitable worlds, sele
 
 ***Update***
 
-Under both the System Object and the Planet object, refering back to previous elements as "this" DO NOT work. Currently I do not know how to reference an element of an object from within the object. Until this is discovered, we're up against a hard wall with development. 
+Current application of method calls in the constructor does consistently populate the object in planet.js! Methods cannot, however, be called inside of methods, unless I'm completely misunderstanding something, so some roll calls are now hard-coded. This does not affect functionality. 
+
+WWWW          WWWW
+ WWW    WW    WWW
+   WW   WW   WW
+    WWW WW WWW
+   WWWWWWWWWWWW
