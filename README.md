@@ -8,7 +8,14 @@ Eventually I'd like to implement custom behavior (min/max habitable worlds, sele
 
 ***Update***
 
-Current application of method calls in the constructor does consistently populate the object in planet.js! Methods cannot, however, be called inside of methods, unless I'm completely misunderstanding something, so some roll calls are now hard-coded. This does not affect functionality. 
+Current application of method calls in the constructor does consistently populate the object in planet.js! Methods cannot, however, be called inside of methods, unless the call in the method is also appended with this 
+
+(  ex. if(roll==10){
+            let binary=[]
+            binary[0]=starGen(this.d9())
+            binary[1]=starGen(this.d9())
+            return binary
+        }                                )
 
 WWWW          WWWW
  WWW    WW    WWW
