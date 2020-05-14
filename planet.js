@@ -1,20 +1,24 @@
 //PUT A BIG W ON THE BOARD BOYS, SHE WORKS (EVEN HAB IS UP AND RUNNING)
 
 //Constructor (Tables 6-12, P. 19-23)
-class RockyPlanet {
+class Planet {
     constructor() {
-        this.body = this.getRockyBody(this.d10()); 
-        this.gravity = this.getRockyGravity(this.d10(), this.getRockyGravitymod(this.body));
-        this.orbitalFeatures = this.getRockyOrbitalFeatures(this.getRockyOrbitalFeaturesMod(this.gravity));
-        this.atmo = this.getRockyAtmo(this.d10(), this.getRockyAtmoMod(this.gravity));
-        this.atmocomp = this.getRockyAtmoComp(this.d10(), this.atmo);
-        this.climate = this.getRockyClimate(this.d10());
-        this.hab = this.getRockyHab(this.d10(), this.getRockyHabMod(this.climate), this.atmo, this.atmocomp);
+
+        this.body            = this.getBody(this.d10()); 
+        this.gravity         = this.getGravity(this.d10(), this.getGravitymod(this.body));
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getClimate(this.d10());
+        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
+        // this.location        = console.trace();
+
     }
 
         //Roll Functions
         d2(){
         let roll = Math.floor(Math.random()*2)+1;
+        console.trace();
         return roll;    
     }
 
@@ -39,7 +43,7 @@ class RockyPlanet {
     }
 
     //Get Body (Table 1-6 P. 19)
-        getRockyBody(roll) {
+        getBody(roll) {
         if(roll >= 9){
             return 'Vast';
         } else if(roll >= 8){
@@ -56,7 +60,7 @@ class RockyPlanet {
     }
 
     //Get Gravity (Table 1-7 P. 20)
-        getRockyGravitymod(body){
+        getGravitymod(body){
         var gravmod = 0;
         if(body === 'Vast'){
             gravmod = 4;
@@ -72,7 +76,7 @@ class RockyPlanet {
         return gravmod;
     }
 
-        getRockyGravity(roll, mod){
+        getGravity(roll, mod){
         var rollmod = roll + mod;
         if(rollmod >= 9){
             return 'High Gravity';
@@ -84,8 +88,7 @@ class RockyPlanet {
     }
 
     //Get Orbital Features (Table 1-8 P. 20)
-    //TODO fix this function
-        getRockyOrbitalFeaturesMod(gravity){
+        getOrbitalFeaturesMod(gravity){
         var mod = 0;
         if(gravity === 'High Gravity'){
             mod = Math.floor(Math.random()*4)+1;
@@ -99,7 +102,7 @@ class RockyPlanet {
             }
         }
 
-        getRockyOrbitalFeatures(times){
+        getOrbitalFeatures(times){
         var orbitalfeat =[];
         for(let i=0;i<times;i++){
             const roll = Math.floor(Math.random()*100)+1;
@@ -119,7 +122,7 @@ class RockyPlanet {
 
 
     //Get Atmo (Table 1-9 P. 24)
-        getRockyAtmoMod(gravity) {
+        getAtmoMod(gravity) {
         if(gravity === 'High Gravity'){
             return 1;
         } else if(gravity === 'Low Gravity'){
@@ -129,7 +132,7 @@ class RockyPlanet {
         }
     }
 
-        getRockyAtmo(roll, mod){
+        getAtmo(roll, mod){
         var rollmod = roll + mod;
         if(rollmod >= 10){
             return 'Heavy';
@@ -143,7 +146,7 @@ class RockyPlanet {
     }
 
     //Get Atmo Composition (Table 1-10 P. 24)
-        getRockyAtmoComp(roll, atmo){
+        getAtmoComp(roll, atmo){
         if(atmo === 'None'){
             return 'N/A';
         } else {
@@ -162,7 +165,8 @@ class RockyPlanet {
     }
 
     //Get Climate (Table 1-11 P. 22)
-        getRockyClimate(roll){
+        getClimate(roll){
+        //var spawnLocation = name of array this is called in (.trace() method, perhaps?)
         //roll needs a -6 in inner cauldron and +6 in outer reaches
         //also if atmo === 'N/A' they are ice worlds in outer, burning worlds inner, primary either
         if(roll > 10){
@@ -179,7 +183,7 @@ class RockyPlanet {
     }
 
     //Get Habitability (Table 1-12 P. 23)
-        getRockyHabMod(climate){
+        getHabMod(climate){
         if(climate ===  'Burning World' || climate === 'Ice World'){
             return -7;
         } else if(climate === 'Hot World' || climate === 'Cold World'){
@@ -190,7 +194,7 @@ class RockyPlanet {
 
     }
 
-        getRockyHab(roll, mod, atmo, comp){
+        getHab(roll, mod, atmo, comp){
         if(atmo === 'None'){
             return 'N/A';
         } else if(comp !== 'Pure' && comp !== 'Tainted'){
@@ -216,6 +220,6 @@ class RockyPlanet {
 
 
 // Planet Actual
-const Planet = new RockyPlanet();
+const genPlanet = new Planet();
     
 console.log(Planet);
