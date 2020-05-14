@@ -1,24 +1,15 @@
 //PUT A BIG W ON THE BOARD BOYS, SHE WORKS (EVEN HAB IS UP AND RUNNING)
 
-//Constructor (Tables 6-12, P. 19-23)
+//Base class for planets, holds all methods NOT SPECIFIC to specific planets
 class Planet {
     constructor() {
-
         this.body            = this.getBody(this.d10()); 
         this.gravity         = this.getGravity(this.d10(), this.getGravitymod(this.body));
-        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
-        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
-        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
-        this.climate         = this.getClimate(this.d10());
-        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
-        // this.location        = console.trace();
-
     }
 
         //Roll Functions
         d2(){
         let roll = Math.floor(Math.random()*2)+1;
-        console.trace();
         return roll;    
     }
 
@@ -107,7 +98,7 @@ class Planet {
         for(let i=0;i<times;i++){
             const roll = Math.floor(Math.random()*100)+1;
             if(roll >= 91){
-                orbitalfeat.push('Moon');
+                orbitalfeat.push(new Moon);
             } else if(roll >= 61 && roll <= 90){
                 orbitalfeat.push('Lesser Moon');
             } else if(roll >= 46 && roll <= 60){
@@ -164,24 +155,6 @@ class Planet {
         }
     }
 
-    //Get Climate (Table 1-11 P. 22)
-        getClimate(roll){
-        //var spawnLocation = name of array this is called in (.trace() method, perhaps?)
-        //roll needs a -6 in inner cauldron and +6 in outer reaches
-        //also if atmo === 'N/A' they are ice worlds in outer, burning worlds inner, primary either
-        if(roll > 10){
-            return 'Ice World';
-        } else if(roll >=8){
-            return 'Cold World';
-        } else if(roll >=4){
-            return 'Temperate World';
-        } else if(roll >=1){
-            return 'Hot World';
-        } else {
-            return 'Burning World';
-        }
-    }
-
     //Get Habitability (Table 1-12 P. 23)
         getHabMod(climate){
         if(climate ===  'Burning World' || climate === 'Ice World'){
@@ -210,7 +183,7 @@ class Planet {
             } else if(rollmod >=2){
                 return 'Trapped Water';
             } else{
-                return 'Its bugged!';
+                return 'Not suitable for life';
             }
         }
     }
@@ -218,8 +191,145 @@ class Planet {
     
 }
 
+//Subclass - planets falling in the inner zone (cruical to climate functionality)
+class InnerPlanet extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getInnerClimate(this.d4(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
+    };
+    //Get Climate (Table 1-11 P. 22)
+    getInnerClimate(roll, atmo){
+        
+        if(atmo === 'None'){
+            return 'Burning World'
+        }else{
+            if(roll > 10){
+                return 'Ice World';
+            } else if(roll >=8){
+                return 'Cold World';
+            } else if(roll >=4){
+                return 'Temperate World';
+            } else if(roll >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
 
-// Planet Actual
-const genPlanet = new Planet();
+//Subclass - planets falling in the Primary zone (cruical to climate functionality)
+class PrimaryPlanet extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getPrimaryClimate(this.d10(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
+    }
+    //Get Climate (Table 1-11 P. 22)
+    getPrimaryClimate(roll, atmo){
+        if(atmo === 'None'){
+            let choice = this.d2();
+            if(choice = 1){
+                return 'Ice World'
+            } else {
+            return 'Burning World'
+            }
+        } else {
+            if(roll > 10){
+                return 'Ice World';
+            } else if(roll >=8){
+                return 'Cold World';
+            } else if(roll >=4){
+                return 'Temperate World';
+            } else if(roll >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+//Subclass - planets falling in the Outer zone (cruical to climate functionality)
+class OuterPlanet extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getOuterClimate(this.d10(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
+    }
+    //Get Climate (Table 1-11 P. 22)
+    getOuterClimate(roll, atmo){
+        if(atmo === 'None'){
+            return 'Ice World'
+        }else{
+            if(roll+6 > 10){
+                return 'Ice World';
+            } else if(roll+6 >=8){
+                return 'Cold World';
+            } else if(roll+6 >=4){
+                return 'Temperate World';
+            } else if(roll+6 >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+//Subclass - planets that are moons (cruical to orbital feature functionality)
+class Moon extends Planet {
+    constructor(){
+        super(Planet);
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getMoonClimate(this.d10(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod(this.climate), this.atmo, this.atmocomp);
+    }
+    getMoonClimate(roll, atmo){
+        if(atmo === 'None'){
+            let choice = this.d2();
+            if(choice = 1){
+                return 'Ice World'
+            } else {
+            return 'Burning World'
+            }
+        } else {
+            if(roll > 10){
+                return 'Ice World';
+            } else if(roll >=8){
+                return 'Cold World';
+            } else if(roll >=4){
+                return 'Temperate World';
+            } else if(roll >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+
+
+
+// // Planet Actual
+// const genInnerPlanet = new InnerPlanet();
+// const genPrimaryPlanet = new PrimaryPlanet();
+// const genOuterPlanet = new OuterPlanet();
+// const genMoon = new Moon();
     
-console.log(Planet);
+// console.log(genInnerPlanet);
+// console.log(genPrimaryPlanet);
+// console.log(genOuterPlanet);
+// console.log(genMoon);
