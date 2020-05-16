@@ -376,6 +376,7 @@ console.log(SystemGen);
 //     }
 // }
 
+<<<<<<< Updated upstream
 // // Generates the Star type (1-2 p.13)
 
 // function starGen(roll){
@@ -420,6 +421,43 @@ console.log(SystemGen);
 // console.log(system1l.outerElements);
 // console.log(system1.star)
 // // Testing area, ignore
+=======
+// Testing area, ignore
+console.log(system1.star);
+// for(i=25;i>0;i--){console.log(featureGen(d10()),starGen(d10()));}
+
+//Generating and populating inner, primary and outer
+
+//Determines weak/standard/dominant solar zones (p. 13)
+function systemElem(star){
+    innerCount = 0;
+    primCount = 0;
+    outCount = 0;
+    if(star === 'Mighty'){
+        innerCount = d7();
+        primCount = d3();
+        outCount = d5();
+    } else if(star === 'Vigorous'){
+        innerCount = d5();
+        primCount = d5();
+        outCount = d5();
+    } else if(star === 'Luminous'){
+        innerCount = d3();
+        primCount = d5();
+        outCount = d5();
+    } else if(star === 'Dull'){
+        innerCount = d5();
+        primCount = d5();
+        outCount = d7();
+    } else {
+
+        innerCount = d5();
+        primCount = d5();
+        outCount = d7();
+    }
+    return [innerCount, primCount, outCount]
+} 
+>>>>>>> Stashed changes
 
 // for(i=25;i>0;i--){
 //     // console.log(featureGen(d10()),starGen(d10()));
@@ -478,6 +516,7 @@ console.log(SystemGen);
 //     } return outerElems;
 // }
 
+<<<<<<< Updated upstream
 // //look-up references for the pop functions (1-3 p. 14)
 
 // function innerGen(initial){
@@ -555,3 +594,18 @@ console.log(SystemGen);
 //     }
 //     return planetCount;
 // }
+=======
+//finds instances of "planet", replaces with object
+function getPlanet(){
+    var elems =innerElems.concat(outerElems, primaryElems)
+    var planetCount = 0;
+    for(i=0;i<elems.length;i++){
+        if(elems[i] === "Planet"){
+            //replaces with a Planet Object
+            planetCount++
+        }
+    }
+    return planetCount;
+}
+
+>>>>>>> Stashed changes
