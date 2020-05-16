@@ -6,7 +6,6 @@
 class System{
     constructor(){
         
-         
         this.star            = this.starGen(this.d10());
         this.innerElements   = this.innerElemPop(this.systemElem(this.star));
         this.primaryElements = this.primaryElemPop(this.systemElem(this.star));
@@ -135,7 +134,7 @@ class System{
         } else if(initial >= 46){
             return 'Gravity Riptide'
         } else if(initial >= 42){
-            return 'Gas Giant';
+            return 'Gas Giant'; //new InnerGiant();
         } else if(initial >= 30){
             return 'Dust Cloud';
         } else if(initial >= 21){
@@ -173,7 +172,7 @@ class System{
         } else if(initial >= 74){
             return 'Gravity Riptide';
         } else if(initial >= 56){
-            return 'Gas Giant'
+            return 'Gas Giant'; //new OuterGiant();
         } else if(initial >= 47){
             return 'Dust Cloud';
         } else if(initial >= 41){
@@ -228,14 +227,14 @@ class System{
 
         //Haven
         if(roll==3){
-            //outerElements.push(new OuterPlanet());
-            //innerElements.push(new InnerPlanet());
-            //primaryElements.push(new PrimaryPlanet());
+            //Add 1 Planet to each zone
+            //this.outerElements.push(new OuterPlanet());
+            //this.innerElements.push(new InnerPlanet());
+            //this.primaryElements.push(new PrimaryPlanet());
+            //Planets in Primary +1 to atmo, +2 to atmocomp, no idea how to implement
+            //All planets add +2 to Hab, no idea how to implement
             console.log('Possible life-supporting planets detected in this system');
             return "Haven";
-            //Add 1 Planet to each zone
-            //Planets in Primary +1 to atmo, +2 to atmocomp
-            //All planets add +2 to Hab
         }
 
         //Ill-Omened
@@ -261,11 +260,30 @@ class System{
 
         //Starfarers
         if(roll==7){
-            const totalSystemElements = this.innerElements.concat(this.outerElements, this.primaryElements);
-            for(let i=0;i<totalSystemElements;i++){
-                //find total number of Planets
-                //if total number of Planets < 4, add (4-total) Planets
-            }
+            // //find total number of planets
+            // const totalSystemElements = this.innerElements.concat(this.outerElements, this.primaryElements);
+            // let planetCount = 0;
+            // for(let i=0; i<totalSystemElements; i++){
+            //     if(typeof totalSystemElements[i] == 'object'){
+            //         if(totalSystemElements[i].type = 'Rocky'){
+            //             planetCount++
+            //         }
+            //     } 
+            // }
+            // //if total number of Planets < 4, add (4-total) Planets
+            // if(planetCount <4){
+            //     console.log(planetCount);
+            //     for(let i=0; i<4-planetCount; i++){
+            //         let place = Math.floor(Math.random()*3)+1;
+            //         if( place == 1){
+            //             this.innerElements.push(new InnerPlanet());
+            //         } else if(place == 2){
+            //             this.primaryElements.push(new PrimaryPlanet());
+            //         } else {
+            //             this.outerElements.push(new OuterPlanet());
+            //         }
+            //     }
+            // }
             console.log('Warning: Space Faring Society Detected');
             return "Starfarers";
             //minimum 4 planets
@@ -273,13 +291,22 @@ class System{
 
         //Stellar Anomaly
         if(roll==8){
+            //find total number of Planets
             const totalSystemElements = this.innerElements.concat(this.outerElements, this.primaryElements);
-            for(let i=0;i<totalSystemElements;i++){
-                //find total number of Planets
-                //if total planets >= 2, remove 2 planets
-                //if total planets = 1, remove planet
-                //if total planets = 0, no change
+            let planetCount = 0;
+            for(let i=0;i<totalSystemElements.length;i++){
+                if(typeof totalSystemElements[i] == 'object'){
+                    if(totalSystemElements[i].type = 'Rocky'){
+                        planetCount++
+                    }
+                } 
             }
+            //if total planets >= 2, remove 2 planets
+            //if total planets = 1, remove planet
+            //if total planets = 0, no change
+             
+                
+                
             console.log('Warning: star flux and luminosity fluctuating outside normal constraints')
             return "Stellar Anomaly"
             //Minus 2 Planets (Min = 0)

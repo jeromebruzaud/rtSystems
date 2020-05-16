@@ -27,7 +27,7 @@ class Planet {
         let roll = Math.floor(Math.random()*10)+1;
         return roll;    
     }
-
+        
         d100(){
         let roll = Math.floor(Math.random()*100)+1;
         return roll;    
@@ -320,8 +320,142 @@ class Moon extends Planet {
     }
 }
 
+//Gas Giants, 
+class GasGiant{
+    constructor(){
+        
+    }
+    d5(){
+        let roll = Math.floor(Math.random()*5)+1;
+        return roll; 
+    }
+    d7(){
+        let roll = Math.floor(Math.random()*7)+1;
+        return roll; 
+    }
+    d10(){
+        let roll = Math.floor(Math.random()*10)+1;
+        return roll;    
+    }
+    d100(){
+        let roll = Math.floor(Math.random()*100)+1;
+        return roll;    
+    }
+    getGasBody(roll){
+        if(roll >= 9){
+            return 'Massive Gas Giant';
+        } else if(roll >= 3){
+            return 'Gas Giant';
+        } else{
+            return 'Gas Dwarf';
+        }
+    }
+    getTitanCheck(roll){
+        if(roll == 10){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    getInnerGasGravMod(body){
+        if(body === 'Gas Dwarf'){
+            return -5;
+        }else if(body === 'Gas Giant'){
+            return 0;
+        }else if(body === 'Massive Gas Giant'){
+            return 3;
+        }
+    }
+    getOuterGasGravMod(body, titanCheck){
+        if(titanCheck === true){
+            return 10;
+        } else if(body === 'Gas Dwarf'){
+            return -5;
+        }else if(body === 'Gas Giant'){
+            return 0;
+        }else if(body === 'Massive Gas Giant'){
+            return 3;
+        }
+    }
+    getGasGrav(roll, mod){
+        let rollmod = roll + mod;
+        if(rollmod >= 10){
+            return 'Titanic';
+        } else if(rollmod >= 7){
+            return 'Powerful';
+        } else if(rollmod >= 3){
+            return 'Strong';
+        } else {
+            return 'Weak';
+        }
+    }
+    getGasOrbFeatMod(gravity){
+        if(gravity === 'Titanic'){
+            return 30;
+        }else if(gravity === 'Powerful'){
+            return 20;
+        }else if(gravity === 'Strong'){
+            return 15;
+        }else {
+            return 10;
+        }
+    }
+    getGasOrbFeatNumber(gravity){
+        if(gravity == 'Titanic'){
+            return this.d5() + this.d5() + this.d5() + 3
+        }else if(gravity == 'Powerful'){
+            return this.d10() + 2;
+        }else if(gravity == 'Strong'){
+            return this.d7();
+        }else if(gravity == 'Weak'){
+            return this.d5();
+        }else{
+            return this.d5();
+        }
+    }
+    getGasOrbFeat(mod, num){
+        let orbFeat = []
+        for(let i=0; i<=num; i++){
+            let roll = Math.floor(Math.random()*100)+1;
+            let rollmod = roll + mod;
+            if(rollmod >= 86){
+                orbFeat.push(new Moon());
+            } else if(rollmod >= 51){
+                orbFeat.push('Lesser Moon');
+            } else if(rollmod >= 36){
+                orbFeat.push('Planetary Rings (Dust)');
+            } else if(rollmod >= 21){
+                orbFeat.push('Planetary Rings (Debris)');
+            } else {
+                orbFeat.push('No Feature');
+            }
+        } return orbFeat;
 
+    }
+}
 
+class InnerGiant extends GasGiant{
+    constructor(){
+        super();
+        this.type = 'Gas';
+        this.body = this.getGasBody(this.d10());
+        this.gravity = this.getGasGrav(this.d10(), this.getInnerGasGravMod(this.body));
+        this.orbitalFeatures = this.getGasOrbFeat(this.getGasOrbFeatMod(this.gravity), this.getGasOrbFeatNumber(this.gravity));
+    }
+}
+class OuterGiant extends GasGiant{
+    constructor(){
+        super();
+        this.type = 'Gas';
+        this.body = this.getGasBody(this.d10());
+        this.gravity = this.getGasGrav(this.d10(), this.getOuterGasGravMod(this.body, this.getTitanCheck()));
+        this.orbitalFeatures = this.getGasOrbFeat(this.getGasOrbFeatMod(this.gravity), this.getGasOrbFeatNumber(this.gravity));
+    }
+}
+const genOuterGiant = new OuterGiant();
+console.log(genOuterGiant);
+const genInnerGiant = new InnerGiant();
+console.log(genInnerGiant);
 
 // // Planet Actual
 // const genInnerPlanet = new InnerPlanet();
