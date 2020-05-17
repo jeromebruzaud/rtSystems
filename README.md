@@ -42,4 +42,8 @@ TODOS:
 
 and THAT'S IT for the javascript portion of the code! Then we can move on to populating the HTML document and designing that while we figure out the server side portion of things. 
 
+05/16 rewind!:
+
+After a catastrophic merge failure, went to backups and pushed to master, and created/updated a personal branch off the master. Now there are two safeguards. All work will be done off the branches from now on, and only merged upon review. 
+
 
