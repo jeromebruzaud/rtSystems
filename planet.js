@@ -320,6 +320,165 @@ class Moon extends Planet {
     }
 }
 
+class InnerPlanet_Haven extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getInnerClimate(this.d4(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod_Haven(this.climate), this.atmo, this.atmocomp);
+    }
+    //Get Habitability (Table 1-12 P. 23)
+    getHabMod_Haven(climate){
+        if(climate ===  'Burning World' || climate === 'Ice World'){
+            return -5;
+        } else if(climate === 'Hot World' || climate === 'Cold World'){
+            return 0;
+        } else {
+            return 2;
+        }
+
+    }
+    //Get Climate (Table 1-11 P. 22)
+    getInnerClimate(roll, atmo){
+        
+        if(atmo === 'None'){
+            return 'Burning World'
+        }else{
+            if(roll > 10){
+                return 'Ice World';
+            } else if(roll >=8){
+                return 'Cold World';
+            } else if(roll >=4){
+                return 'Temperate World';
+            } else if(roll >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+//Subclass - planets falling in the Primary zone (cruical to climate functionality)
+class PrimaryPlanet_Haven extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod_Haven(this.gravity));
+        this.atmocomp        = this.getAtmoComp_Haven(this.d10(), this.atmo);
+        this.climate         = this.getPrimaryClimate(this.d10(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod_Haven(this.climate), this.atmo, this.atmocomp);
+    }
+    //Get Atmo (Table 1-9 P. 24)
+    getAtmoMod_Haven(gravity) {
+        if(gravity === 'High Gravity'){
+            return 2;
+        } else if(gravity === 'Low Gravity'){
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    //Get Atmo Composition (Table 1-10 P. 24)
+        getAtmoComp_Haven(roll, atmo){
+        if(atmo === 'None'){
+            return 'N/A';
+        } else {
+            if(roll >=7){
+                return 'Pure';
+            } else if(roll >=5){
+                return 'Tainted';
+            } else if(roll >=2){
+                return 'Toxic';
+            } else if(roll >=1){
+                return 'Corrosive';
+            } else {
+                return 'Deadly';
+            }
+        }
+    }
+
+    //Get Habitability (Table 1-12 P. 23)
+        getHabMod_Haven(climate){
+        if(climate ===  'Burning World' || climate === 'Ice World'){
+            return -5;
+        } else if(climate === 'Hot World' || climate === 'Cold World'){
+            return 0;
+        } else {
+            return 2;
+        }
+
+    }
+    //Get Climate (Table 1-11 P. 22)
+    getPrimaryClimate(roll, atmo){
+        if(atmo === 'None'){
+            let choice = this.d2();
+            if(choice = 1){
+                return 'Ice World'
+            } else {
+            return 'Burning World'
+            }
+        } else {
+            if(roll > 10){
+                return 'Ice World';
+            } else if(roll >=8){
+                return 'Cold World';
+            } else if(roll >=4){
+                return 'Temperate World';
+            } else if(roll >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+//Subclass - planets falling in the Outer zone (cruical to climate functionality)
+class OuterPlanet_Haven extends Planet {
+    constructor(){
+        super(Planet);
+        this.orbitalFeatures = this.getOrbitalFeatures(this.getOrbitalFeaturesMod(this.gravity));
+        this.atmo            = this.getAtmo(this.d10(), this.getAtmoMod(this.gravity));
+        this.atmocomp        = this.getAtmoComp(this.d10(), this.atmo);
+        this.climate         = this.getOuterClimate(this.d10(), this.atmo);
+        this.hab             = this.getHab(this.d10(), this.getHabMod_Haven(this.climate), this.atmo, this.atmocomp);
+    }
+    //Get Habitability (Table 1-12 P. 23)
+    getHabMod_Haven(climate){
+        if(climate ===  'Burning World' || climate === 'Ice World'){
+            return -5;
+        } else if(climate === 'Hot World' || climate === 'Cold World'){
+            return 0;
+        } else {
+            return 2;
+        }
+
+    }
+    //Get Climate (Table 1-11 P. 22)
+    getOuterClimate(roll, atmo){
+        if(atmo === 'None'){
+            return 'Ice World'
+        }else{
+            if(roll+6 > 10){
+                return 'Ice World';
+            } else if(roll+6 >=8){
+                return 'Cold World';
+            } else if(roll+6 >=4){
+                return 'Temperate World';
+            } else if(roll+6 >=1){
+                return 'Hot World';
+            } else {
+                return 'Burning World';
+            }
+        }
+    }
+}
+
+
 //Gas Giants, 
 class GasGiant{
     constructor(){

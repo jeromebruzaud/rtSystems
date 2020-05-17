@@ -33,17 +33,19 @@ GAS GIANTS! A whole new class and two subclasses
 
 Implemented Star Farers (functionality available upon page link)
 
+05/17 new Class System: 
+System.js now utilizes 1 class and 10 subclasses to express System Feature Functionality
+All the constructors are now implemented and ready for testing, except for Stellar Anomaly functionality
+(So much code and all I need is to change two entries in the orbital features! --Minus 2 planets min 0) 
+
 TODOS: 
--Implement Haven and Stellar Anomaly functionality in Systems (haven needs to change the way planets form before any new planets are generated, it's a unique case, and its gonna be a bitch to implement cleanly)
+-Fix/cleanup Stellar Anomaly functionality in Systems 
 
 -Link the two pages (testing w/import and export gave back errors I didn't understand)
+
 -Actually populate planets instead of pushing 'Planet' in System orbital features once linked
 
 
 and THAT'S IT for the javascript portion of the code! Then we can move on to populating the HTML document and designing that while we figure out the server side portion of things. 
-
-05/16 rewind!:
-
-After a catastrophic merge failure, went to backups and pushed to master, and created/updated a personal branch off the master. Now there are two safeguards. All work will be done off the branches from now on, and only merged upon review. 
 
 
