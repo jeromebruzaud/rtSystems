@@ -1,7 +1,6 @@
 //PUT A BIG W ON THE BOARD BOYS, SHE WORKS (EVEN HAB IS UP AND RUNNING)
 
 //Constructor (Tables 6-12, P. 19-23)
-<<<<<<< Updated upstream
 class RockyPlanet {
     constructor() {
         this.body = this.getRockyBody(this.d10()); 
@@ -12,47 +11,6 @@ class RockyPlanet {
         this.climate = this.getRockyClimate(this.d10());
         this.hab = this.getRockyHab(this.d10(), this.getRockyHabMod(this.climate), this.atmo, this.atmocomp);
     }
-=======
-function Rockyplanet(body, gravity, orbitalFeatures, atmo, atmocomp, climate, hab) {
-    this.body = body, 
-    this.gravity = gravity,
-    this.orbitalFeatures = orbitalFeatures,
-    this.atmo = atmo,
-    this.atmocomp = atmocomp,
-    this.climate = climate,
-    this.hab = hab
-}
-
-//Planet Actual
-planet1 = new Rockyplanet(
-    //body
-    getRockyBody(d10()),
-    //gravity
-    getRockyGravity(d10(), getRockyGravitymod(this.body)),
-    //orbitalFeatures
-    getRockyOrbitalFeatures(getRockyOrbitalFeaturesMod(this.gravity)),
-    //atmo
-    getRockyAtmo(d10(), (getRockyAtmoMod(this.gravity))),
-    //atmocomp
-    getRockyAtmoComp(d10(), this.atmo),
-    //climate
-    getRockyClimate(d10()),
-    //hab
-    getRockyHab(d10(), getRockyHabMod(this.climate), this.atmo, this.atmocomp)
-    )
-    console.log(planet1);
-
-//Roll Functions
-function d2(){
-    roll = Math.floor(Math.random()*2)+1
-    return roll;    
-}
-
-function d3(){
-    roll = Math.floor(Math.random()*3)+1
-    return roll;    
-}
->>>>>>> Stashed changes
 
         //Roll Functions
         d2(){
