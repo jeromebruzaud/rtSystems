@@ -1,2 +1,0 @@
-# stuff to ignore
-test.js
