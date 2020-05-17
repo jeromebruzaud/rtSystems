@@ -8,7 +8,7 @@ Eventually I'd like to implement custom behavior (min/max habitable worlds, sele
 
 ***Update***
 
-05/12/2020: Current application of method calls in the constructor does consistently populate the object in planet.js! Methods cannot, however, be called inside of methods, unless the call in the method is also appended with this 
+Current application of method calls in the constructor does consistently populate the object in planet.js! Methods cannot, however, be called inside of methods, unless the call in the method is also appended with this 
 
 (  ex. if(roll==10){
             let binary=[]
@@ -22,24 +22,3 @@ WWWW          WWWW
    WW   WW   WW
     WWW WW WWW
    WWWWWWWWWWWW
-
-05/14/2020: Re-factored Planets into different subclasses for proper climate functionality
-
-Big new feature: 
-MOONS! Moons work just dandy. I'm going to interperate cases such as "low mass" planet and "vast" moon to be similar to pluto and charon: charon's big for a moon and pluto's small for a planet. No messy added spaghetti to this table!
-
-05/16 new feature:
-GAS GIANTS! A whole new class and two subclasses
-
-Implemented Star Farers (functionality available upon page link)
-
-TODOS: 
--Implement Haven and Stellar Anomaly functionality in Systems (haven needs to change the way planets form before any new planets are generated, it's a unique case, and its gonna be a bitch to implement cleanly)
-
--Link the two pages (testing w/import and export gave back errors I didn't understand)
--Actually populate planets instead of pushing 'Planet' in System orbital features once linked
-
-
-and THAT'S IT for the javascript portion of the code! Then we can move on to populating the HTML document and designing that while we figure out the server side portion of things. 
-
-

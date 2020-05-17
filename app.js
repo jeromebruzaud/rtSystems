@@ -2,16 +2,11 @@ var sysTable = document.getElementById('sysTable');
 var genSys = document.getElementById('genSys');
 
 function popSysTable(){
-    if(sysTable.style.display == "none"){
-        //getTable();
+    if(sysTable.style.display === "none"){
         sysTable.style.display = "block";
-    } 
-
-}
-
-function getTable(){
-    //let getObjectData = new System();
-    //populate table with getObjectData
+    } else {
+        sysTable.style.display = "none";
+    }
 }
 console.log('hello world')
 
