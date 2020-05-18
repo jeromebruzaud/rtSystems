@@ -6,13 +6,9 @@ import {Data} from "./data.js";
 /**
  * Dice class that simulate a single dice with the number of faces given at construction.
  */
-class Dice {
-    constructor(faces) {
-        this.faces = faces;
-    }
-
-    roll() {
-        return Math.floor(Math.random() * this.faces) + 1;
+let findDataElementRange = (list, rangeattr, roll) => {
+    if (list instanceof Array) {
+        return list.find((s) => s[rangeattr][0] <= roll && roll <= s[rangeattr][1]).name;
     }
 }
 
@@ -24,10 +20,11 @@ class Dice {
  * @returns the roll value (Int)
  */
 let roll = (faces, quantity = 1, modifier = 0) => {
-    let dice = new Dice(faces);
+    let rollDice = faces => Math.floor(Math.random() * faces) + 1;
+
     let result = 0;
     for (let r = 0; r < quantity; r++) {
-        result += dice.roll();
+        result += rollDice(faces);
     }
     result += modifier;
     return result;
@@ -64,23 +61,25 @@ class System {
     }
 
     starGen() {
-        let getStarName = (roll) => Module.starTypes.find((s) => s.rollrange[0] <= roll && roll <= s.rollrange[1]).name
-
         let stars = [];
         let starTypeRoll = rollf("1d10");
+        // if roll 1 to 9, get one star, if roll 10, get 2 stars
         if (starTypeRoll <= 9) {
-            stars.push(getStarName(starTypeRoll));
+            stars.push(findDataElementRange(Data.starTypes, "rollrange", starTypeRoll));
         } else {
-            stars.push(getStarName(rollf("1d8")));
+            stars.push(findDataElementRange(Data.starTypes, "rollrange", rollf("1d8")));
+            // new roll. If below 7, the 2 stars are of the same type. Otherwise, each is rolled independently
             if (rollf('1d10') <= 7) {
-                // 2 stars of the same type
+                // the 2 stars of the same type
                 stars = stars.concat(stars);
             } else {
-                // 2 stars rolled independently
-                stars.push(getStarName(rollf("1d8")));
-                // put the main Star (with effect on the solar zone) first
-                stars.sort((a, b) => Module.starTypes.indexOf(Module.starTypes.find((s) => s.name === a))
-                    - Module.starTypes.indexOf(Module.starTypes.find((s) => s.name === b)))
+                // the 2 stars rolled independently
+                stars.push(findDataElementRange(Data.starTypes, "rollrange", rollf("1d8")));
+                // put the main Star (which defines the solar zone) first in the list
+                stars.sort((a, b) => Data.starTypes.indexOf(
+                    Data.starTypes.find((s) => s.name === a))
+                    - Data.starTypes.indexOf(
+                        Data.starTypes.find((s) => s.name === b)))
             }
         }
         return stars;
@@ -88,7 +87,7 @@ class System {
 
     defineSolarZones(stars) {
         // solar zone types are defined here but can be put somewhere el
-        let starSolarZoneType = Module.starSolarZoneTypes.find((star) => {
+        let starSolarZoneType = Data.starSolarZoneTypes.find((star) => {
             // get first solarZoneType which type matches the star type
             return star.type === stars[0];
         });
@@ -104,24 +103,23 @@ class System {
             let elements = [];
             for (let i = 0; i < Math.max(1, rollf(solarZones[zone].rollFormula)); i++) {
                 let roll = rollf("1d100");
-                elements.push(Module.systemElements.find((el) => {
+                elements.push(Data.systemElements.find((el) => {
                     return el[zone][0] <= roll && roll <= el[zone][1];
                 }).name);
             }
             return elements;
         }
-
         return [
             populateZone("inner"),
             populateZone("primary"),
             populateZone("outer")
-        ];
+    ];
     }
 
     featuresGen() {
         let features = [];
         for (let i = 0; i < Math.max(1, rollf("1d5-2")); i++) {
-            features.push(Module.systemFeatures[rollf("1d10") - 1].name);
+            features.push(Data.systemFeatures[rollf("1d10") - 1].name);
         }
         return features;
     }
