@@ -1,0 +1,21 @@
+{
+  "name": "rtsystems",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {},
+  "description": "The hitherto unnamed project is designed to emulate the behavior of the star system generator for the role playing game \"Rogue Trader\" as outlined in the book \"Stars of Inequity\" by Fantasy Flight Games (whose IP I DO NOT own, nor do I claim ownership of any IP under the Games Workshop company or it's affiliates, and have ZERO INTENTION of distributing this project for profit)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveyCHaysIII/rtSystems.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaveyCHaysIII/rtSystems/issues"
+  },
+  "homepage": "https://github.com/DaveyCHaysIII/rtSystems#readme"
+}
