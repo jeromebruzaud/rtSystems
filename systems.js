@@ -1,5 +1,5 @@
 // //TODO: fix Binary, include system feature conditions
-import {Module} from "./module.js";
+import {Data} from "./data.js";
 
 //---------------------------------
 // Class Structure

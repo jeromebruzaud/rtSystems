@@ -4,7 +4,7 @@ const solarZoneType = {
     NORMAL: {name: "normal", rollFormula: "1d5"},
 }
 
-export const Module = {
+export const Data = {
 
     starTypes: [
         {name: "Mighty", rollrange: [1, 1]},
